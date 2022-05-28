@@ -37,16 +37,16 @@ const method = req.method;
     res.end();
 }
 
-// First way to export
+// First way to export (CORRECT)
 // module.exports = {
 //     handler: requestHandler,
 //     someText: "Khalid"
 // };
 
-// Second way to export
-module.exports.handler = requestHandler;
-module.exports.someText = "Khalid";
+// Second way to export (CORRECT)
+// module.exports.handler = requestHandler;
+// module.exports.someText = "Khalid";
 
-// Only for node.js way to export
+// Only for node.js way to export (CORRECT)
 exports.handler = requestHandler;
 exports.someText = "Khalid";
