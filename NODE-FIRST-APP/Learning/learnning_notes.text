@@ -7,3 +7,12 @@ npm install <package>
 
 Install package Locally for dev: 
 npm install <package> --save-dev 
+
+============================== Errors and fixes ==============================
+ERROR : listen EADDRINUSE: address already in use :::<port_number>
+Fix : 
+    1- Get the PID associated with the port 
+        "lsof -i tcp:<port_number>"
+    2- Kill the process
+        "kill -9 <PID_FROM_STEP_1>"
+    
