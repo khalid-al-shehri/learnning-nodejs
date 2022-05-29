@@ -1,0 +1,9 @@
+
+Install package Globally : 
+npm install -g <package>
+
+Install package Locally for dev: 
+npm install <package>
+
+Install package Locally for dev: 
+npm install <package> --save-dev 
