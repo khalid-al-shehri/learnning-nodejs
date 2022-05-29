@@ -21,6 +21,7 @@ const method = req.method;
         return req.on('end', () => {
             const parsedBody = Buffer.concat(body).toString();
             const message = parsedBody.split("=")[1];
+            
             // print the message 
             console.log(message);
             fs.writeFile('message.text', message, error => {
