@@ -12,6 +12,7 @@ app.use((req, res, next) => {
 
 app.use((req, res, next) => {
     console.log("Middleware 2");
+    res.send("Hi Welcome");
 });
 
 const server = http.createServer(app);
