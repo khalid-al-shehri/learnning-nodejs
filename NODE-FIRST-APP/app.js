@@ -2,6 +2,7 @@
 const http = require('http');
 const express = require('express');
 const bodyParser = require("body-parser");
+const path = require('path');
 
 const app = express();
 
@@ -16,7 +17,7 @@ app.use(shopRoutes);
 
 // 404 Page
 app.use((req, res, next)=>{
-    res.status(404).send("<h1>PAGE NOT FOUND, ERROR 404</h1>")
+    res.status(404).sendFile(path.join(__dirname, "views", "404.html"));
 });
 
 app.listen(3000);
