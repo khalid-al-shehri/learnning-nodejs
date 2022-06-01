@@ -11,13 +11,14 @@ const postAddProduct = (req, res, next) => {
 };
 
 const getProducts = (req, res, next) => {
-    const products = productModel.fetchAll();
-    console.log(products);
-    res.render("shop", {
-      pageTitle: "shop",
-      titleListOfProducts: "My list of products : ",
-      products: products,
+    productModel.fetchAll((productsFromFile)=>{
+        res.render("shop", {
+            pageTitle: "shop",
+            titleListOfProducts: "My list of products : ",
+            products: productsFromFile,
+          });
     });
+    
   };
 
 module.exports = {
