@@ -11,6 +11,9 @@ npm install <package> --save-dev
 Install Express:
 https://expressjs.com/en/starter/installing.html
 
+Install ejs & pug & handlebars :
+npm install --save ejs pug express-handlebars
+
 ============================== Errors and fixes ==============================
 ERROR : listen EADDRINUSE: address already in use :::<port_number>
 Fix : 
