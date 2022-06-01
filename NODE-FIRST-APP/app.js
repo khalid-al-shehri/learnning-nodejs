@@ -22,6 +22,6 @@ app.use("/admin", adminRoutes);
 app.use(shopRoutes);
 
 // 404 Page
-app.use(errorsController.notFound);
+app.use(errorsController.get404Page);
 
 app.listen(3000);
