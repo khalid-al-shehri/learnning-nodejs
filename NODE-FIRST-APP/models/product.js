@@ -18,12 +18,9 @@ module.exports = class Product {
     this.title = title;
   }
 
-  
-
   save() {
     getProductsFromFile(productsFromFile=>{
         productsFromFile.push(this);
-
         fs.writeFile(saveProductPath, JSON.stringify(productsFromFile), err => {
             // print if there is an error
             if(err){
