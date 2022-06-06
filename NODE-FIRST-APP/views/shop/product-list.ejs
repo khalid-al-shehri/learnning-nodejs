@@ -13,6 +13,11 @@
                 <img src= "<%= product.imageUrl%>" alt="<%= product.title%>">
                 <p>$ <%= product.description%></p>
                 <p><%= product.price%></p>
+                <div class="card__actions">
+                    <form action="/add-to-cart" method="POST">
+                        <button class="btn"> Add to cart</button>
+                    </form>
+                </div>
             <% } %>
         <% }else{ %>
             <h1>Sorry, no products for now.</h1>

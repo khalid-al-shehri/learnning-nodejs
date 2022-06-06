@@ -24,6 +24,7 @@ const getProducts = (req, res, next) => {
       pageTitle: 'Admin Products',
       products: productsFromFile,
       path: '/admin/products',
+      titleListOfProducts: 'List of products in the stores : '
     });
   });
 };

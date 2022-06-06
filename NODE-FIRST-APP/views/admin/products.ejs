@@ -3,4 +3,27 @@
 
 <body>
     <%- include("../includes/nav.ejs")%>
-    <%- include("../includes/end.ejs") %>
+
+    <main>
+        
+        <% if(products.length > 0){ %>
+            <h1><%= titleListOfProducts%></h1>
+            <% for(let product of products){ %>
+                <h3><%= product.title%></h3>
+                <img src= "<%= product.imageUrl%>" alt="<%= product.title%>">
+                <p>$ <%= product.description%></p>
+                <p><%= product.price%></p>
+                <div class="card__actions">
+                    <a href="/admin/edit-product"> Edit <%= product.title%></a>
+                    <form action="/admin/delete-product" method="POST">
+                        <button class="btn"> Delete <%= product.title%></button>
+                    </form>
+                </div>
+            <% } %>
+        <% }else{ %>
+            <h1>Sorry, no products for now.</h1>
+        <% } %>
+    </main>
+</body>
+
+<%- include("../includes/end.ejs") %>
