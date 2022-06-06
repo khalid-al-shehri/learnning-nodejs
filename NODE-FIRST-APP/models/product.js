@@ -1,8 +1,8 @@
-const fs = require("fs");
-const path = require("path");
-const rootPath = require("../util/path");
+const fs = require('fs');
+const path = require('path');
+const rootPath = require('../util/path');
 
-const saveProductPath = path.join(rootPath, "data", "products.json");
+const saveProductPath = path.join(rootPath, 'data', 'products.json');
 
 const getProductsFromFile = callBack => {
     fs.readFile(saveProductPath, (error, fileContent) =>{
@@ -24,7 +24,7 @@ module.exports = class Product {
         fs.writeFile(saveProductPath, JSON.stringify(productsFromFile), err => {
             // print if there is an error
             if(err){
-                console.log("writeFile Error : ", err);
+                console.log('writeFile Error : ', err);
             }
         })
     });
