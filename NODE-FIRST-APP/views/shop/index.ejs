@@ -9,7 +9,10 @@
         <% if(products.length > 0){ %>
             <h1><%= titleListOfProducts%></h1>
             <% for(let product of products){ %>
-                <p><%= product.title%></p>
+                <h3><%= product.title%></h3>
+                <img src= "<%= product.imageUrl%>" alt="<%= product.title%>">
+                <p>$ <%= product.description%></p>
+                <p><%= product.price%></p>
             <% } %>
         <% }else{ %>
             <h1>Sorry, no products for now.</h1>
