@@ -1,0 +1,25 @@
+<%- include("../includes/head.ejs") %>
+</head>
+
+<body>
+    <%- include("../includes/nav.ejs")%>
+
+    <main>
+        
+        <% if(product != null){ %>
+            <h3><%= product.title%></h3>
+                <img src= "<%= product.imageUrl%>" alt="<%= product.title%>">
+                <p>$ <%= product.description%></p>
+                <p><%= product.price%></p>
+                <div class="card__actions">
+                    <form action="/add-to-cart" method="POST">
+                        <button class="btn"> Add to cart</button>
+                    </form>
+                </div>
+        <% }else{ %>
+            <h1>Sorry, no product match this ID.</h1>
+        <% } %>
+    </main>
+</body>
+
+<%- include("../includes/end.ejs") %>

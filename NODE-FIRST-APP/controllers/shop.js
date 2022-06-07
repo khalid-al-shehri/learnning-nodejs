@@ -11,6 +11,17 @@ const getProducts = (req, res, next) => {
   });
 };
 
+const getProductsDetails = (req, res, next) => {
+  const productId = req.params.productId;
+  productModel.fetchProdcut(productId, productFromFile => {
+    res.render('shop/product-details', {
+      product: productFromFile,
+      pageTitle: productFromFile.title,
+      path: '/products',
+    });
+  });
+};
+
 const getIndex = (req, res, next) => {
   productModel.fetchAll((productsFromFile) => {
     res.render('shop/index', {
@@ -48,5 +59,6 @@ module.exports = {
   getIndex: getIndex,
   getCart: getCart,
   getCheckout: getCheckout,
-  getOrders: getOrders
+  getOrders: getOrders,
+  getProductsDetails: getProductsDetails
 };

@@ -13,12 +13,14 @@ const getProductsFromFile = callBack => {
         }
     });
 }
+
 module.exports = class Product {
   constructor(title, imageUrl, description, price) {
     this.title = title;
     this.imageUrl = imageUrl;
     this.description = description;
     this.price = price;
+    this.id = (Math.floor(Math.random() * 9999999)).toString();
   }
 
   save() {
@@ -35,5 +37,13 @@ module.exports = class Product {
 
   static fetchAll(callBack) {
     getProductsFromFile(callBack);
+  }
+
+  static fetchProdcut(prodcutID, callBack){
+    getProductsFromFile(Products => {
+      const prodcut = Products.find(p => p.id === prodcutID);
+      console.log(prodcut);
+      callBack(prodcut);
+    });
   }
 };
