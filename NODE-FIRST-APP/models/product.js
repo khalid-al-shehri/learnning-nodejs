@@ -42,7 +42,6 @@ module.exports = class Product {
   static fetchProdcut(prodcutID, callBack){
     getProductsFromFile(Products => {
       const prodcut = Products.find(p => p.id === prodcutID);
-      console.log(prodcut);
       callBack(prodcut);
     });
   }
