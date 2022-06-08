@@ -1,5 +1,6 @@
 const { redirect } = require('express/lib/response');
 const productModel = require('../models/product');
+const cartModel = require('../models/cart');
 
 const getProducts = (req, res, next) => {
   productModel.fetchAll((productsFromFile) => {
@@ -43,7 +44,8 @@ const getCart = (req, res, next) =>{
 
 const postCart = (req, res, next) =>{
   const productID = req.body.productID;
-  console.log(productID);
+  const productPrice = req.body.productPrice;
+  cartModel.addProduct(productID, productPrice);
   res.redirect("/cart");
 };
 
