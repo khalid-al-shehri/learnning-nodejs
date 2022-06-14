@@ -15,16 +15,17 @@ const getProductsFromFile = callBack => {
 }
 
 module.exports = class Product {
-  constructor(title, imageUrl, description, price) {
+  constructor(title, imageUrl, description, price, id) {
     this.title = title;
     this.imageUrl = imageUrl;
     this.description = description;
     this.price = price;
-    this.id = (Math.floor(Math.random() * 9999999)).toString();
+    this.id = id;
   }
 
   save() {
-    getProductsFromFile(productsFromFile=>{
+    getProductsFromFile(productsFromFile => {
+        this.id = (Math.floor(Math.random() * 9999999)).toString();  
         productsFromFile.push(this);
         fs.writeFile(saveProductPath, JSON.stringify(productsFromFile), err => {
             // print if there is an error
@@ -32,6 +33,34 @@ module.exports = class Product {
                 console.log('writeFile Error : ', err);
             }
         })
+    });
+  }
+
+  update() {
+    getProductsFromFile(productsFromFile => {
+        const existingProductIndex = productsFromFile.findIndex(prod => prod.id === this.id);
+        const updatedProducts = [...productsFromFile];
+        updatedProducts[existingProductIndex] = this; // this : the product in constructor
+        fs.writeFile(saveProductPath, JSON.stringify(updatedProducts), err => {
+          // print if there is an error
+          if(err){
+              console.log('writeFile Error : ', err);
+          }
+      })
+    });
+  }
+
+  static delete(productId) {
+    getProductsFromFile(productsFromFile => {
+        const existingProductIndex = productsFromFile.findIndex(prod => prod.id === productId);
+        const fileProducts = [...productsFromFile];
+        fileProducts.splice(existingProductIndex, 1); // 2nd parameter means remove one item only
+        fs.writeFile(saveProductPath, JSON.stringify(fileProducts), err => {
+          // print if there is an error
+          if(err){
+              console.log('writeFile Error : ', err);
+          }
+      })
     });
   }
 

@@ -70,5 +70,5 @@ module.exports = {
   getCheckout: getCheckout,
   getOrders: getOrders,
   getProductsDetails: getProductsDetails,
-  postCart: postCart
+  postCart: postCart,
 };
