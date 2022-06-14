@@ -14,8 +14,11 @@ const postAddProduct = (req, res, next) => {
   const description = req.body.description;
 
   const product = new productModel(title, imageUrl, description, price, null);
-  product.save();
-  res.redirect('/');
+  product.save()
+  .then(() => {
+    res.redirect('/');
+  })
+  .catch();
 };
 
 const getEditProduct = (req, res, next) => {
@@ -28,18 +31,22 @@ const getEditProduct = (req, res, next) => {
   // Check edit mode.
   const productId = req.params.productId;
 
-  productModel.fetchProdcut(productId, product => {
-    if(!product){
-      return res.redirect("/");
-    }
+  if(!product){
+    return res.redirect("/");
+  }else{
+    productModel.fetchProdcut(productId)
+  .then(([product, filedData]) => {
     res.render('admin/edit-product', {
       pageTitle: 'Edit productsss',
       path: '/admin/add-product',
       editing: editMode,
       productId: productId,
-      product: product
+      product: product[0]
     });
-  });
+  })
+  .catch();
+  
+  }
 };
 
 const postEditProduct = (req, res, next) => {

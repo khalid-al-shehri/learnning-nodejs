@@ -3,36 +3,42 @@ const productModel = require('../models/product');
 const cartModel = require('../models/cart');
 
 const getProducts = (req, res, next) => {
-  productModel.fetchAll((productsFromFile) => {
+  productModel.fetchAll()
+  .then(([rows, filedData]) => {
     res.render('shop/product-list', {
       pageTitle: 'All products',
       titleListOfProducts: 'My list of products : ',
-      products: productsFromFile,
+      products: rows,
       path: '/products',
     });
-  });
+  })
+  .catch();
 };
 
 const getProductsDetails = (req, res, next) => {
   const productId = req.params.productId;
-  productModel.fetchProdcut(productId, productFromFile => {
+  productModel.fetchProdcut(productId)
+  .then(([row, filedData]) => {
     res.render('shop/product-details', {
-      product: productFromFile,
-      pageTitle: productFromFile.title,
+      product: row[0],
+      pageTitle: row[0].title,
       path: '/products',
     });
-  });
+  })
+  .catch();
 };
 
 const getIndex = (req, res, next) => {
-  productModel.fetchAll((productsFromFile) => {
+  productModel.fetchAll()
+  .then(([rows, filedData]) => {
     res.render('shop/index', {
       pageTitle: 'shop',
-      products: productsFromFile,
+      products: rows,
       path: '/',
       titleListOfProducts: 'My list of products : ',
     });
-  });
+  })
+  .catch();
 };
 
 const getCart = (req, res, next) =>{
