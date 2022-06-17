@@ -4,6 +4,22 @@
 <body>
     <%- include("../includes/nav.ejs")%>
     <main>
-        <h1>Nothing there!</h1>
+        <% if(orders.length > 0){ %>
+            <% for(let order of orders){ %>
+                <h3>orderId : <%= order.id%></h3>
+                <% for(let product of order.products){ %>
+                    <img height="100" width="80" src= "<%= product.imageUrl%>" alt="<%= product.title%>">
+                    <p>Price : $ <%= product.price%></p>
+                    <p>QTY :  <%= product.orderItem.quantity%></p>
+                    <div class="card__actions">
+                        <%- include("../includes/details.ejs", {product: product}) %>
+                        <%- include("../includes/add-to-cart.ejs", {product: product}) %>
+                    </div>
+                <% } %>
+                <hr>
+            <% } %>
+        <% }else{ %>
+            <h1>Sorry, no orders for now.</h1>
+        <% } %>
     </main>
     <%- include("../includes/end.ejs") %>

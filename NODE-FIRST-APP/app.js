@@ -4,13 +4,15 @@ const express = require('express');
 const path = require('path');
 const errorsController = require('./controllers/errors');
 const sequelize = require('./util/database');
-const productModel = require('./models/product');
-const userModel = require('./models/user');
-const cartModel = require('./models/cart');
-const cartItemModel = require('./models/cart-item');
 const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
+const Product = require('./models/product');
+const User = require('./models/user');
+const Cart = require('./models/cart');
 const CartItem = require('./models/cart-item');
+const Order = require('./models/order');
+const OrderItem = require('./models/order-item');
+
 
 const app = express();
 
@@ -31,7 +33,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // This func will called every time any API called and gives the request a user details
 app.use((req, res, next) => {
-    userModel.findByPk(1)
+    User.findByPk(1)
     .then(user => {
         req.user = user;
         next();
@@ -48,12 +50,15 @@ app.use(shopRoutes);
 app.use(errorsController.get404Page);
 
 // Associations
-productModel.belongsTo(userModel, {constrants: true, onDelete: "CASCADE"});
-userModel.hasMany(productModel);
-userModel.hasOne(cartModel);
-cartModel.belongsTo(userModel);
-cartModel.belongsToMany(productModel, {through: CartItem});
-productModel.belongsToMany(cartModel, {through: CartItem});
+Product.belongsTo(User, {constraints: true, onDelete: "CASCADE"});
+User.hasMany(Product);
+User.hasOne(Cart);
+Cart.belongsTo(User);
+Cart.belongsToMany(Product, {through: CartItem});
+Product.belongsToMany(Cart, {through: CartItem});
+Order.belongsTo(User);
+User.hasMany(Order);
+Order.belongsToMany(Product, {through: OrderItem});
 
 // this method "sync()" will sync your models and create tables in database.
 sequelize
@@ -62,18 +67,21 @@ sequelize
 .sync()
 .then(results => {
     // console.log("sequelize sync results : \n",results);
-    return userModel.findByPk(1);
+    return User.findByPk(1);
 })
 .then(user => {
     if(!user){
-        return userModel.create({
+        return User.create({
             name: 'Khalid', phone_number: '0567109909'
         });
     }
     return user;
 })
+// .then(user => {
+//     return user.createCart();
+// })
 .then(user => {
-    app.listen(3000); 
+    app.listen(3000);
 })
 .catch(error => {
     console.log("sequelize sync error : \n", error);

@@ -1,6 +1,34 @@
 <%- include("../includes/head.ejs") %>
 </head>
-
 <body>
     <%- include("../includes/nav.ejs")%>
+
+    <main>
+        
+        <% if(products.length > 0){ %>
+            <h1><%= titleListOfProducts%></h1>
+            <% for(let product of products){ %>
+                <h3><%= product.title%></h3>
+                <img height="100" width="80" src= "<%= product.imageUrl%>" alt="<%= product.title%>">
+                <p><%= product.description%></p>
+                <p>$ <%= product.price%></p>
+                <p>Qty: <%= product.cartItem.quantity%></p>
+                <div class="card__actions">
+                    <%- include("../includes/details.ejs", {product: product}) %>
+                </div>
+                <div class="card__actions">
+                    <%- include("../includes/delete.ejs", {product: product}) %>
+                </div>
+                <hr>
+                <form action="/orders/create" method="POST">
+                    <button type="submit">
+                        Order Now!
+                    </button>
+                </form>
+            <% } %>
+        <% }else{ %>
+            <h1>Sorry, no products for now.</h1>
+        <% } %>
+    </main>
+</body>
     <%- include("../includes/end.ejs") %>
