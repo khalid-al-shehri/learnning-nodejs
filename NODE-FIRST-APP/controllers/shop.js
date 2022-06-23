@@ -31,6 +31,7 @@ const getProductsDetails = (req, res, next) => {
 };
 
 const getIndex = (req, res, next) => {
+  console.log("laskdjflkasd");
   productModel.fetchAll()
   .then(products => {
     res.render('shop/index', {

@@ -1,17 +1,39 @@
 const mongo = require('../util/database');
 const {ObjectId} = require('mongodb');
 class Product{
-  constructor(title, price, description, imageUrl){
+  constructor(title, price, description, imageUrl, id){
     this.title = title;
     this.price = price;
     this.description = description;
     this.imageUrl = imageUrl;
+    this._id = ObjectId(id);
   }
 
   
+update(){
+  const db = mongo.getDB();
+  return db.collection('products').updateOne(
+    {_id: this._id}, 
+    {
+      $set: {
+      title: this.title,
+      description: this.description,
+      price: this.price,
+      imageUrl: this.imageUrl,
+      }
+    },
+  )
+  .then(results => {
+    console.log("Product Updated successfully!");
+  })
+  .catch(error => {
+    console.log("Error in updating the product.");
+  });
+}
+
   save(){
     const db = mongo.getDB();
-    return db.collection('products').insertOne(this)
+    return  db.collection('products').insertOne(this)
     .then(results => {
       console.log("Product inserted successfully!");
     })
@@ -47,6 +69,17 @@ class Product{
     })
     .catch(error => {
       console.log("Error in fetching the product.");
+    });
+  }
+
+  static deleteProduct(productId){
+    const db = mongo.getDB();
+    return db.collection('products').deleteOne({_id: ObjectId(productId)})
+    .then(results => {
+      console.log(`Product (ID : ${productId}) deleted successfully.`);
+    })
+    .catch(error => {
+      console.log(`Error while deleting product (ID : ${productId}) : \n ${error}`);
     });
   }
 }
